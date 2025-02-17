@@ -1,22 +1,14 @@
 import { withAuth } from 'next-auth/middleware';
-import { NextResponse } from 'next/server';
 
-export default withAuth(
-  function middleware(req) {
-    // Custom redirection logic
-    if (req.nextUrl.pathname === '/') {
-      const url = new URL('/auth/sign-in/', req.url);
-      return NextResponse.redirect(url);
-    }
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token, // Only allow users with a valid token
   },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token, // Protect routes by checking token
-    },
-  }
-);
+  pages: {
+    signIn: '/auth/sign-in', // Redirect here if not authenticated
+  },
+});
 
-// Apply the middleware to specific routes
 export const config = {
-  matcher: ['/', '/protected-route/(.*)'], // Adjust to your protected routes
+  matcher: ['/', '/protected-route/:path*'], // Protect these routes
 };

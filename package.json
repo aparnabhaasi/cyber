@@ -11,6 +11,7 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'"
   },
   "dependencies": {
+    "vercel-build": "npm install && npm run build",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
     "@fullcalendar/bootstrap": "^6.1.15",
